@@ -1,3 +1,7 @@
+"""
+Snake Eater Game
+Made by IHEfty
+"""
 from tkinter import *
 import random as rn
 
@@ -32,16 +36,15 @@ class Food:
                 return [x, y]
 
     def spawn_special_food(self):
-        # Place special food in a rn location
         self.special_food_coordinates = self.place_food()
         canvas.create_oval(self.special_food_coordinates[0], self.special_food_coordinates[1],
                            self.special_food_coordinates[0] + SPACE_SIZE, self.special_food_coordinates[1] + SPACE_SIZE,
                            fill=SPECIAL_FOOD_COLOR, tag="special_food")
-        window.after(11000, self.remove_special_food)  # Remove special food after 11 seconds
+        window.after(11000, self.remove_special_food)
 
     def remove_special_food(self):
         global special_food_active
-        if special_food_active:  # Only remove if special food is currently active
+        if special_food_active:  
             canvas.delete("special_food")
             self.special_food_coordinates = None
             special_food_active = False
@@ -65,7 +68,6 @@ def next_turn(snake, food):
     square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE_COLOR)
     snake.squares.insert(0, square)
 
-    # Check for collision with regular food
     if x == food.coordinates[0] and y == food.coordinates[1]:
         global score
         score += 1
@@ -77,18 +79,16 @@ def next_turn(snake, food):
                            food.coordinates[0] + SPACE_SIZE, food.coordinates[1] + SPACE_SIZE,
                            fill=FOOD_COLOR, tag="food")
 
-        # Check if score is a multiple of 5 to spawn special food
         if score % 5 == 0:
             food.spawn_special_food()
             global special_food_active
-            special_food_active = True  # Set flag to indicate special food is active
+            special_food_active = True  
 
-    # Check for collision with special food
     elif special_food_active and food.special_food_coordinates is not None:
         if x == food.special_food_coordinates[0] and y == food.special_food_coordinates[1]:
-            score += 23  # Increase score by 23 for special food
+            score += 23  
             label.config(text="Score: {}".format(score))
-            food.remove_special_food()  # Remove special food immediately
+            food.remove_special_food()  
 
     else:
         del snake.coordinates[-1]
@@ -106,7 +106,7 @@ def change_direction(new_direction):
         'left': 'right', 'right': 'left',
         'up': 'down', 'down': 'up'
     }
-    if new_direction != opposite_directions[direction]:  # Prevent reverse direction
+    if new_direction != opposite_directions[direction]:  
         direction = new_direction
 
 def check_collisions(snake):
@@ -129,7 +129,7 @@ def restart_game():
     canvas.delete(ALL)
     snake = Snake()
     food = Food()
-    special_food_active = False  # Reset special food status
+    special_food_active = False  
     
     canvas.create_oval(food.coordinates[0], food.coordinates[1],
                        food.coordinates[0] + SPACE_SIZE, food.coordinates[1] + SPACE_SIZE,
@@ -143,7 +143,7 @@ window.resizable(False, False)
 
 score = 0
 direction = 'down'  
-special_food_active = False  # Flag to track special food status
+special_food_active = False  
 
 label = Label(window, text="Score: {}".format(score), font=('consolas', 40))
 label.pack()
