@@ -36,9 +36,13 @@ Here’s a preview of the game in action:
 
 ## Installation
 1. Ensure you have Python installed on your computer. You can download it from [python.org](https://www.python.org/downloads/).
-2. Download or clone this repository to your local machine.
-3. Navigate to the project directory in your terminal.
-4. Run the game using the following command:
+2. If Tkinter is not installed, you can install it using `pip`:
+   ```bash
+   pip install tk
+   ```
+3. Download or clone this repository to your local machine.
+4. Navigate to the project directory in your terminal.
+5. Run the game using the following command:
    ```bash
    python snake.py
    ```
